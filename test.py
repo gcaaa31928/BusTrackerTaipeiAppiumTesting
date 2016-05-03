@@ -1,5 +1,3 @@
-from Tools.scripts.win_add2path import PATH
-
 __author__ = 'gca'
 import os
 import unittest
@@ -25,8 +23,19 @@ class ContactAppTestAppium(unittest.TestCase):
 
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
+    def test_installed(self):
+        self.assertFalse(self.driver.is_app_installed('is.not.existed.app'))
+        self.assertTrue(self.driver.is_app_installed('nexti.android.bustaipei'))
+
+    def test_removed(self):
+        self.assertTrue(self.driver.is_app_installed('nexti.android.bustaipei'))
+        self.driver.remove_app('nexti.android.bustaipei')
+        self.assertFalse(self.driver.is_app_installed('nexti.android.bustaipei'))
+
+
     def test_ClickRefreshLink(self):
-        pass
+        el = self.driver.find_element_by_android_uiautomator('new UiSelector().text("路線規劃")')
+        el.click()
         # refreshButton  = self.driver.find_element_by_id("com.witmergers.getstatus:id/fab")
         # self.assertTrue(refreshButton.is_displayed())
         # refreshButton.click()
