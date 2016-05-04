@@ -12,18 +12,20 @@ class PublicBikePageTestAppium(BasicTestAppium):
         self.bike_button.click()
 
     def test_vehicles_views_is_scrollable(self):
-        wait = WebDriverWait(self.driver, 8)
+        wait = WebDriverWait(self.driver, 25)
         wait.until(
-            lambda driver: self.driver.find_element_by_name('Vehicles')
+            lambda driver: self.driver.find_element_by_android_uiautomator('new UiSelector().text("Vehicles")')
         )
         # self.driver.find_element_by_link_text('WDesk').click()
-        self.assertIsNotNone(self.driver.find_element_by_name('Vehicles'))
+        self.assertIsNotNone(self.driver.find_element_by_android_uiautomator('new UiSelector().text("Vehicles")'))
         vehicle_elements = self.driver.find_elements_by_xpath('//android.widget.RelativeLayout')
         self.driver.scroll(vehicle_elements[-1],vehicle_elements[0])
         self.driver.scroll(vehicle_elements[0],vehicle_elements[-1])
 
 
     # TODO(Red): Needed to be test google map
+
+    # TODO(Red): Needed to be test display options
 
     def tearDown(self):
         super().tearDown()
