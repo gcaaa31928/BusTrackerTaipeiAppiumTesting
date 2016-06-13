@@ -12,12 +12,13 @@ class BasicTestAppium(unittest.TestCase):
         desired_caps = {}
         desired_caps['platformName'] = 'Android'
         desired_caps['platformVersion'] = '5.1'
-        desired_caps['deviceName'] = 'Android'
+        desired_caps['deviceName'] = 'Android Emulator'
         desired_caps['app'] = PATH('../bus.apk')
         desired_caps['appPackage'] = 'nexti.android.bustaipei'
         desired_caps['appActivity'] = 'nexti.android.bustaipei.activities.SplashActivity'
 
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+        # self.driver.set_location(25.0454, 121.532, 0)
 
     def tearDown(self):
         self.driver.quit()
