@@ -16,14 +16,6 @@ class PackageTestAppium(BasicTestAppium):
         self.assertFalse(self.driver.is_app_installed('nexti.android.bustaipei'))
 
 
-    # def test_ClickRefreshLink(self):
-    #     el = self.driver.find_element_by_android_uiautomator('new UiSelector().text("路線規劃")')
-    #     el.click()
-        # refreshButton  = self.driver.find_element_by_id("com.witmergers.getstatus:id/fab")
-        # self.assertTrue(refreshButton.is_displayed())
-        # refreshButton.click()
-        # ## Right now we are just verify the displayed message on the Phone
-        # ## You can right code to handle that toast message and Verify that message
 
     def tearDown(self):
         super().tearDown()
