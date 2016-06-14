@@ -5,3 +5,4 @@ from . import test_mrt
 from . import test_public_bike
 from . import test_railway
 from . import test_taxi
+from .import test_nearby_page

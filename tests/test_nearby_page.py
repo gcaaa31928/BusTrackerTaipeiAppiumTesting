@@ -1,6 +1,5 @@
 from time import sleep
 
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 __author__ = 'gca'
@@ -14,7 +13,7 @@ class NearbyPageTestAppium(BasicTestAppium):
         button.click()
 
     def input_place(self):
-        wait = WebDriverWait(self.driver, 25)
+        wait = WebDriverWait(self.driver, 15)
         input = wait.until(
             lambda driver: self.driver.find_element_by_id("nexti.android.bustaipei:id/text_place")
         )
@@ -28,15 +27,27 @@ class NearbyPageTestAppium(BasicTestAppium):
             lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@index='0' and @resource-id='nexti.android.bustaipei:id/text_name']")
         )
         first_place.click()
+        first_stop = wait.until(
+            lambda driver: self.driver.find_elements_by_id("nexti.android.bustaipei:id/text_stopname")
+        )
+
 
     def test_all_info_is_corrective(self):
-        # wait = WebDriverWait(self.driver, 25)
-        # wait.until(
-        #     lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@text='Nearby']")
-        # )
         self.input_place()
-        stop_name = self.driver.find_elements_by_id('nexti.android.bustaipei:id/text_stopname')
-        print(stop_name)
+        wait = WebDriverWait(self.driver, 15)
+        stop = wait.until(
+            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_stopname')
+        )
+        # Red: first stop is Huaisheng Elementary
+        self.assertEqual(stop.text, 'Huaisheng Elementary School')
+
+        # Red: first stop has correct routes
+        stop_route = self.driver.find_element_by_id('nexti.android.bustaipei:id/text_routename').text
+        self.assertEqual(stop_route, '669, 919')
+
+        # Red: all stop is over 2 stops
+        stop_count = len(self.driver.find_elements_by_id('nexti.android.bustaipei:id/drag_handle'))
+        self.assertGreaterEqual(stop_count, 2)
 
     # TODO(Red): its image is kind of broken, i don't know how to test it.
 
