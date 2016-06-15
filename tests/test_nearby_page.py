@@ -15,7 +15,14 @@ class NearbyPageTestAppium(BasicTestAppium):
         )
         button.click()
 
-    def input_place(self):
+    def click_favorites_page(self):
+        wait = WebDriverWait(self.driver, 15)
+        button = wait.until(
+            lambda driver: self.driver.find_element_by_android_uiautomator('new UiSelector().text("Favorites")')
+        )
+        button.click()
+
+    def click_first_search_place(self, place_name):
         wait = WebDriverWait(self.driver, 15)
         input = wait.until(
             lambda driver: self.driver.find_element_by_id("nexti.android.bustaipei:id/text_place")
@@ -24,20 +31,29 @@ class NearbyPageTestAppium(BasicTestAppium):
         input_place = wait.until(
             lambda driver: self.driver.find_element_by_id("nexti.android.bustaipei:id/edit_place")
         )
-        input_place.send_keys('no. 8, section 3, civic blvd')
+        input_place.send_keys(place_name)
         self.driver.find_element_by_id('nexti.android.bustaipei:id/button_go').click()
-        first_place = wait.until(
-            lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@index='0' and @resource-id='nexti.android.bustaipei:id/text_name']")
-        )
-        first_place.click()
-
-    def click_first_stop(self):
-        self.input_place()
         wait = WebDriverWait(self.driver, 15)
-        stop = wait.until(
-            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_stopname')
+        first_nearby_stop = wait.until(
+            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_name')
+        ).click()
+
+    def click_first_nearby_stop(self, place_name):
+        self.click_first_search_place(place_name)
+        wait = WebDriverWait(self.driver, 15)
+        first_nearby_stop = wait.until(
+            lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@index='0' and @resource-id='nexti.android.bustaipei:id/text_stopname']")
         )
-        stop.click()
+        first_nearby_stop.click()
+
+    def click_bus_in_routes_page(self, place_name, bus_index):
+        self.click_first_nearby_stop(place_name)
+        wait = WebDriverWait(self.driver, 15)
+        bus = wait.until(
+            lambda driver: self.driver.find_elements_by_id('nexti.android.bustaipei:id/text_routename')
+        )[bus_index]
+        bus.click()
+
 
     def tearDown(self):
         super().tearDown()

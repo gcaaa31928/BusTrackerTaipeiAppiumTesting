@@ -12,7 +12,7 @@ class NearbyPageInfoTestAppium(NearbyPageTestAppium):
 
 
     def test_all_info_is_corrective(self):
-        self.input_place()
+        self.click_first_search_place('no. 8, section 3, civic blvd')
         wait = WebDriverWait(self.driver, 15)
         stop = wait.until(
             lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_stopname')
