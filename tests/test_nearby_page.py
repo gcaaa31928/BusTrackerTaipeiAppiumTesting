@@ -9,7 +9,10 @@ from tests.test_basic import BasicTestAppium
 class NearbyPageTestAppium(BasicTestAppium):
     def setUp(self):
         super().setUp()
-        button = self.driver.find_element_by_android_uiautomator('new UiSelector().text("Nearby")')
+        wait = WebDriverWait(self.driver, 15)
+        button = wait.until(
+            lambda driver: self.driver.find_element_by_android_uiautomator('new UiSelector().text("Nearby")')
+        )
         button.click()
 
     def input_place(self):
@@ -27,29 +30,14 @@ class NearbyPageTestAppium(BasicTestAppium):
             lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@index='0' and @resource-id='nexti.android.bustaipei:id/text_name']")
         )
         first_place.click()
-        first_stop = wait.until(
-            lambda driver: self.driver.find_elements_by_id("nexti.android.bustaipei:id/text_stopname")
-        )
 
-
-    def test_all_info_is_corrective(self):
+    def click_first_stop(self):
         self.input_place()
         wait = WebDriverWait(self.driver, 15)
         stop = wait.until(
             lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_stopname')
         )
-        # Red: first stop is Huaisheng Elementary
-        self.assertEqual(stop.text, 'Huaisheng Elementary School')
-
-        # Red: first stop has correct routes
-        stop_route = self.driver.find_element_by_id('nexti.android.bustaipei:id/text_routename').text
-        self.assertEqual(stop_route, '669, 919')
-
-        # Red: all stop is over 2 stops
-        stop_count = len(self.driver.find_elements_by_id('nexti.android.bustaipei:id/drag_handle'))
-        self.assertGreaterEqual(stop_count, 2)
-
-    # TODO(Red): its image is kind of broken, i don't know how to test it.
+        stop.click()
 
     def tearDown(self):
         super().tearDown()
