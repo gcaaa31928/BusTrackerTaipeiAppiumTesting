@@ -48,6 +48,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
             self.assertTrue(expected_routes[index] in route.text)
             index += 1
 
+    # TC100-03
     def test_add_favorites_station(self):
         wait = WebDriverWait(self.driver, 15)
         self.click_bus_in_routes_page('Taipei Station', 0)
