@@ -35,6 +35,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         stop_count = len(self.driver.find_elements_by_id('nexti.android.bustaipei:id/counter_view'))
         self.assertEqual(3, stop_count)
 
+    # TC100-03
     def test_search_station(self):
         expected_routes = ['221', '232', '232', 'F215去', 'F215返', 'F216去', 'F216返', 'F223工業去', 'F223工業返', 'F223去']
         wait = WebDriverWait(self.driver, 15)
@@ -48,7 +49,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
             self.assertTrue(expected_routes[index] in route.text)
             index += 1
 
-    # TC100-03
+    # TC100-04
     def test_add_favorites_station(self):
         wait = WebDriverWait(self.driver, 15)
         self.click_bus_in_routes_page('Taipei Station', 0)
@@ -70,6 +71,18 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         )
         self.assertEqual(first_favorites_stop.text, 'Taipei Main Sta.')
 
+    def test_route_info(self):
+        wait = WebDriverWait(self.driver, 15)
+        self.click_bus_in_routes_page('Taipei Station', 0)
+        timetable_button = wait.until(
+            lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@text='Timetable']")
+        )
+        timetable_button.click()
+        title = wait.until(
+            lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@index='1']")
+        ).text
+        self.assertEqual(title, 'Route info')
+
 
     def tearDown(self):
-        super().tearDown()
+            super().tearDown()
