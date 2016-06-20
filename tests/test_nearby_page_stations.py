@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from tests.test_nearby_page import NearbyPageTestAppium
-
+import re
 __author__ = 'gca'
 from tests.test_basic import BasicTestAppium
 
@@ -83,6 +83,29 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         ).text
         self.assertEqual(title, 'Route info')
 
+    def test_sort_routes(self):
+        wait = WebDriverWait(self.driver, 15)
+        self.click_first_nearby_stop('Taipei Station')
+        wait.until(
+            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/menu_passby_sort')
+        ).click()
+        sleep(0.5)
+        estimates = self.driver.find_elements_by_id('nexti.android.bustaipei:id/text_estimate')
+        current_estimate = 0
+        is_depart = False
+        for estimate in estimates:
+            if is_depart:
+                self.assertEqual(estimate.text, 'Depart')
+            if estimate.text == 'Depart':
+                is_depart = True
+                continue
+            elif estimate.text == 'Approach':
+                continue
+            match = re.search('(\d{0,2}) min', estimate.text)
+            next_estimate = int(match.group(1))
+            self.assertLessEqual(current_estimate, next_estimate)
+            current_estimate = next_estimate
+
 
     def tearDown(self):
-            super().tearDown()
+        super().tearDown()
