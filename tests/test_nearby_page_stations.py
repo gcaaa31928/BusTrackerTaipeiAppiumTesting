@@ -71,6 +71,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         )
         self.assertEqual(first_favorites_stop.text, 'Taipei Main Sta.')
 
+    # TC100-05
     def test_route_info(self):
         wait = WebDriverWait(self.driver, 15)
         self.click_bus_in_routes_page('Taipei Station', 0)
@@ -83,6 +84,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         ).text
         self.assertEqual(title, 'Route info')
 
+    # TC100-06
     def test_sort_routes(self):
         wait = WebDriverWait(self.driver, 15)
         self.click_first_nearby_stop('Taipei Station')
@@ -106,6 +108,7 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
             self.assertLessEqual(current_estimate, next_estimate)
             current_estimate = next_estimate
 
+    # TC100-07
     def test_speaker_clock(self):
         wait = WebDriverWait(self.driver, 15)
         bus_text = self.click_bus_in_routes_page('Taipei Station', 0)
@@ -118,6 +121,9 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         )
         self.assertEqual(bus_text, title_text.text)
 
+    # TC100-08
+    def test_route(self):
+        pass
 
     def tearDown(self):
         super().tearDown()

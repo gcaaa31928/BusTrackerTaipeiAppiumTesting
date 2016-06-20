@@ -10,7 +10,7 @@ class NearbyPageInfoTestAppium(NearbyPageTestAppium):
     def setUp(self):
         super().setUp()
 
-
+    # TC100-01
     def test_all_info_is_corrective(self):
         self.click_first_search_place('no. 8, section 3, civic blvd')
         wait = WebDriverWait(self.driver, 15)
