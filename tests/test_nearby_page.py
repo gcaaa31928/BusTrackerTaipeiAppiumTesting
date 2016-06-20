@@ -1,3 +1,4 @@
+import re
 from time import sleep
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -52,7 +53,9 @@ class NearbyPageTestAppium(BasicTestAppium):
         bus = wait.until(
             lambda driver: self.driver.find_elements_by_id('nexti.android.bustaipei:id/text_routename')
         )[bus_index]
+        bus_text = bus.text
         bus.click()
+        return bus_text
 
 
     def tearDown(self):

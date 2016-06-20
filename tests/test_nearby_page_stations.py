@@ -106,6 +106,18 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
             self.assertLessEqual(current_estimate, next_estimate)
             current_estimate = next_estimate
 
+    def test_speaker_clock(self):
+        wait = WebDriverWait(self.driver, 15)
+        bus_text = self.click_bus_in_routes_page('Taipei Station', 0)
+        speaker_clock = wait.until(
+            lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@text='Speacker clock']")
+        )
+        speaker_clock.click()
+        title_text = wait.until(
+            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_routename')
+        )
+        self.assertEqual(bus_text, title_text.text)
+
 
     def tearDown(self):
         super().tearDown()
