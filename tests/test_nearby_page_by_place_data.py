@@ -13,7 +13,7 @@ class NearbyPageByPlaceDataTestAppium(NearbyPageTestAppium):
     def setUp(self):
         super().setUp()
 
-    # Place Data
+    # TC100-11 Place Data
     def test_place_data(self):
         self.go_to_searching_location_page()
         place_list = []
