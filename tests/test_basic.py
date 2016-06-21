@@ -16,7 +16,8 @@ class BasicTestAppium(unittest.TestCase):
         desired_caps['app'] = PATH('../bus.apk')
         desired_caps['appPackage'] = 'nexti.android.bustaipei'
         desired_caps['appActivity'] = 'nexti.android.bustaipei.activities.SplashActivity'
-
+        desired_caps['unicodeKeyboard'] = True
+        desired_caps['resetKeyboard'] = True
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
         # self.driver.set_location(25.0454, 121.532, 0)
 

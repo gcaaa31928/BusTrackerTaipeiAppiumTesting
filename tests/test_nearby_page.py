@@ -24,6 +24,26 @@ class NearbyPageTestAppium(BasicTestAppium):
         )
         button.click()
 
+    def go_to_searching_location_page(self):
+        wait = WebDriverWait(self.driver, 15)
+        input = wait.until(
+            lambda driver: self.driver.find_element_by_id("nexti.android.bustaipei:id/text_place")
+        )
+        input.click()
+
+    def get_first_search_place_name(self, place_name):
+        wait = WebDriverWait(self.driver, 15)
+        input_place = wait.until(
+            lambda driver: self.driver.find_element_by_id("nexti.android.bustaipei:id/edit_place")
+        )
+        input_place.send_keys(place_name)
+        self.driver.find_element_by_id('nexti.android.bustaipei:id/button_go').click()
+        wait = WebDriverWait(self.driver, 15)
+        first_nearby_stop = wait.until(
+            lambda driver: self.driver.find_element_by_id('nexti.android.bustaipei:id/text_name')
+        )
+        return first_nearby_stop.text
+
     def click_first_search_place(self, place_name):
         wait = WebDriverWait(self.driver, 15)
         input = wait.until(
