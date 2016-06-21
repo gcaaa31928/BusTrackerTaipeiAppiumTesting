@@ -24,8 +24,9 @@ class NearbyPageByPlaceDataTestAppium(NearbyPageTestAppium):
         for i in range(0, 30):
             expected_place_name = random.choice(place_list)
             actual_place_name = self.get_first_search_place_name(expected_place_name)
-            # print(expected_place_name, actual_place_name)
-            self.assertTrue(expected_place_name in actual_place_name)
+            print(expected_place_name, actual_place_name)
+            self.assertTrue(expected_place_name in actual_place_name,
+                            "預期的名字為 " + expected_place_name + "，但實際的名字為 " + actual_place_name)
 
     def tearDown(self):
         super().tearDown()
