@@ -129,10 +129,12 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         bus_stop_name = re.search('\d{3} - (.+)', bus_text)
         # can't get xml for this state
 
+    # TC100-10
     def test_get_on_alarm(self):
         wait = WebDriverWait(self.driver, 15)
         bus_text = self.click_bus_in_routes_page('Taipei Station', 0)
         expected_bus_id = re.search('\d{3}', bus_text).group(0)
+        self.clear_all_notifications()
         get_on_alarm = wait.until(
             lambda driver: self.driver.find_element_by_xpath("//android.widget.TextView[@text='Get-On alarm']")
         )
@@ -141,34 +143,17 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
             lambda driver: self.driver.find_elements_by_id('android:id/text1')
         )[0]
         two_minutes_checkbox.click()
-        # submit_button = wait.until(
-        #     lambda driver: self.driver.find_element_by_id('android:id/button1')
-        # )
-        # submit_button.click()
-        # status = wait.until(
-        #     lambda driver: self.driver.find_element_by_id('android:id/statusBarBackground')
-        # )
-        # navigation_bar = wait.until(
-        #     lambda driver: self.driver.find_element_by_id('android:id/navigationBarBackground')
-        # )
-        self.driver.drag_and_drop(10, 0, 108, 1410)
-        # status_first = wait.until(
-        #     lambda driver: self.driver.find_element_by_id('android:id/title')
-        # )
-        # match = re.search('\d{3}', status_first.text)
-        # actual_bus_id = match.group(0)
-        # self.assertEqual(actual_bus_id, expected_bus_id)
-        sleep(10)
+        self.driver.open_notifications()
+        latest_event = wait.until(
+            lambda driver: self.driver.find_element_by_id('android:id/status_bar_latest_event_content')
+        )
+        title = latest_event.find_element_by_id('android:id/title')
+        match = re.search('\d{3}', title.text)
+        actual_bus_id = match.group(0)
+        self.assertEqual(actual_bus_id, expected_bus_id)
+        self.clear_all_notifications()
 
-    def test_pull_down_status_bar(self):
-        wait = WebDriverWait(self.driver, 15)
-        status = wait.until(
-            lambda driver: self.driver.find_element_by_id('android:id/statusBarBackground')
-        )
-        navigation_bar = wait.until(
-            lambda driver: self.driver.find_element_by_id('android:id/navigationBarBackground')
-        )
-        self.driver.scroll(status, navigation_bar)
+
 
     def tearDown(self):
         super().tearDown()

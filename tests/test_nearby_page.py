@@ -1,6 +1,7 @@
 import re
 from time import sleep
 
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 
 __author__ = 'gca'
@@ -57,6 +58,22 @@ class NearbyPageTestAppium(BasicTestAppium):
         bus.click()
         return bus_text
 
+    def clear_all_notifications(self):
+        wait = WebDriverWait(self.driver, 3)
+        self.driver.open_notifications()
+        try:
+            dismiss_button = wait.until(
+                lambda driver: self.driver.find_element_by_id('com.android.systemui:id/dismiss_text')
+            )
+            dismiss_button.click()
+            cancel_alarm_button = wait.until(
+                lambda driver: self.driver.find_element_by_xpath("//android.widget.Button[@text='Cancel alarm']")
+            )
+            cancel_alarm_button.click()
+        except:
+            pass
+        finally:
+            self.driver.press_keycode(4)
 
     def tearDown(self):
         super().tearDown()
