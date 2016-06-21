@@ -96,11 +96,17 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
         estimates = self.driver.find_elements_by_id('nexti.android.bustaipei:id/text_estimate')
         current_estimate = 0
         is_depart = False
+        serv_over = False
         for estimate in estimates:
             if is_depart:
                 self.assertEqual(estimate.text, 'Depart')
+            elif serv_over:
+                self.assertEqual(estimate.text, 'Serv Over')
             if estimate.text == 'Depart':
                 is_depart = True
+                continue
+            elif estimate.text == 'Serv Over':
+                serv_over = True
                 continue
             elif estimate.text == 'Approach':
                 continue
