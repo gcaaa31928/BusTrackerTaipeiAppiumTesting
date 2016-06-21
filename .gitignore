@@ -55,3 +55,9 @@ fabric.properties
 
 # *.iml
 # modules.xml
+tests/__pycache__/__init__.cpython-35.pyc
+tests/__pycache__/test_app.cpython-35.pyc
+tests/__pycache__/test_basic.cpython-35.pyc
+tests/__pycache__/test_nearby_page.cpython-35.pyc
+tests/__pycache__/test_nearby_page_info.cpython-35.pyc
+tests/__pycache__/test_nearby_page_stations.cpython-35.pyc
