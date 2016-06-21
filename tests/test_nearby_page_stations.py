@@ -123,7 +123,9 @@ class NearbyPageStationTestAppium(NearbyPageTestAppium):
 
     # TC100-08
     def test_route(self):
-        pass
+        wait = WebDriverWait(self.driver, 15)
+        bus_text = self.click_bus_in_routes_page('Taipei Station', 0)
+        bus_stop_name = re.search('\d{3} - (.+)', bus_text)
 
     def tearDown(self):
         super().tearDown()
